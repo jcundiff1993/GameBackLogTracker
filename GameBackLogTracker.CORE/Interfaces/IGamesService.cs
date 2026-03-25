@@ -14,6 +14,5 @@ namespace GameBackLogTracker.CORE.Interfaces
         public Result<List<Games>> GetAllGames();
         public Result UpdateGame(int id, Games game);
         public Result DeleteGame(int id);
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameBackLogTracker.CORE.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,6 +83,10 @@ namespace GameBackLogTracker.UI
                 input = PromptString(message, true);
             }
             return result;
+        }
+        public MenuChoice PromptMenuChoice()
+        {
+            return (MenuChoice)PromptInt("1/Add Game\n2/View All Games\n3/Update Game\n4/Delete Game\n5/View Stats\n6/Exit\nPlease select an option: ", 1, 6);
         }
     }
 }

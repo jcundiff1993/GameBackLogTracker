@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.54.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GameBackLogTracker.BLL\GameBackLogTracker.BLL.csproj" />
     <ProjectReference Include="..\GameBackLogTracker.CORE\GameBackLogTracker.CORE.csproj" />
   </ItemGroup>
