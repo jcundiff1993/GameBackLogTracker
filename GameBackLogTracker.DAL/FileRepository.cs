@@ -1,6 +1,6 @@
 ﻿namespace GameBackLogTracker.DAL
 {
-    public class Class1
+    public class FileRepository
     {
 
     }

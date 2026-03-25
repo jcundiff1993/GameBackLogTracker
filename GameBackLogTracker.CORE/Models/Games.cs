@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameBackLogTracker.CORE
+namespace GameBackLogTracker.CORE.Models
 {
     public class Games
     {
