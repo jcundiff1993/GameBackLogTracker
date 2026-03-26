@@ -2,7 +2,7 @@
 
 namespace GameBackLogTracker.DAL
 {
-    public class FileRepository<T>: IRepository<T> where T : class
+    public class FileRepository<T>: IRepository<T> where T : class, IEntity, new()
     {
         private readonly string _fileName;
         private readonly IMapper<T> _mapper;
@@ -20,18 +20,41 @@ namespace GameBackLogTracker.DAL
             {
                 foreach (T item in items)
                 {
-                    sw.WriteLine(item);
+                    sw.WriteLine(_mapper.Serialize(item));
                 }
             }
         }
-        private List<T>? Load()
+        private List<T> Load()
         {
-            throw new NotImplementedException();
+            if(!File.Exists(_fileName))
+            {
+                File.Create(_fileName).Close();
+            }
+            List<T> items = new();
+            try
+            {
+                using (StreamReader sr = new(_fileName))
+                {
+                    T item = new();
+                    string input = sr.ReadLine();
+                    while (input != null)
+                    {
+                        item = _mapper.Deserialize(input);
+                        items.Add(item);
+                        input = sr.ReadLine();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading data: {ex.Message}");
+            }
+            return items;
         }
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            Save(_items);
         }
 
         public T Create(T Entity)
@@ -56,7 +79,7 @@ namespace GameBackLogTracker.DAL
 
         public void Rollback()
         {
-            throw new NotImplementedException();
+            _items = Load();
         }
 
         public void Update(int id, T Entity)
