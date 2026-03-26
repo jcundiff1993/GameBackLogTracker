@@ -47,27 +47,22 @@ namespace GameBackLogTracker.UI
                 }
             }
         }
-
         private void ViewStats()
         {
             throw new NotImplementedException();
         }
-
         private void DeleteGame()
         {
             throw new NotImplementedException();
         }
-
         private void UpdateGame()
         {
             throw new NotImplementedException();
         }
-
         private void ViewAllGames()
         {
             throw new NotImplementedException();
         }
-
         private void AddGame()
         {
             throw new NotImplementedException();
