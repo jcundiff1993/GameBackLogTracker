@@ -51,40 +51,52 @@ namespace GameBackLogTracker.DAL
             }
             return items;
         }
-
         public void Commit()
         {
             Save(_items);
         }
-
         public T Create(T Entity)
         {
-            throw new NotImplementedException();
+            int maxId = _items.Max(i => i.Id);
+            Entity.Id = maxId + 1;
+            _items.Add(Entity);
+            return Entity;
         }
 
         public void Delete(int Id)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            for(int i = 0; i < _items.Count; i++)
+            {
+                if(_items[i].Id == Id)
+                {
+                    _items.RemoveAt(i);
+                    i--;
+                }
+            }
         }
-
         public List<T> ReadAll()
         {
-            throw new NotImplementedException();
+            return Load();
         }
-
         public T ReadById(int Id)
         {
             throw new NotImplementedException();
         }
-
         public void Rollback()
         {
             _items = Load();
         }
-
         public void Update(int id, T Entity)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _items.Count; i++)
+            {
+                if(_items[i].Id == id)
+                {
+                    _items[i] = Entity;
+                    return;
+                }
+            }
         }
     }
 }
