@@ -10,16 +10,21 @@ namespace GameBackLogTracker.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IRepository<Games> GamesRepository => throw new NotImplementedException();
+        public IRepository<Games> GamesRepository { get; private set; }
+
+        public UnitOfWork(IRepository<Games> gamesRepo)
+        {
+            GamesRepository = gamesRepo;
+        }
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            GamesRepository.Commit();
         }
 
         public void Rollback()
         {
-            throw new NotImplementedException();
+            GamesRepository.Rollback();
         }
     }
 }
