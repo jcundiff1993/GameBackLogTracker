@@ -25,6 +25,7 @@ namespace GameBackLogTracker.UI
         {
             Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
+            Console.Clear();
         }
         public string PromptString(string message, bool isRequired = true)
         {

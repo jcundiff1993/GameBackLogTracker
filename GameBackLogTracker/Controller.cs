@@ -31,15 +31,12 @@ namespace GameBackLogTracker.UI
                 {
                     case MenuChoice.AddGame:
                         AddGame();
-                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.ViewAllGames:
                         ViewAllGames();
-                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.UpdateGame:
                         UpdateGame();
-                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.DeleteGame:
                         DeleteGame();
@@ -71,7 +68,7 @@ namespace GameBackLogTracker.UI
             Result<List<Games>> gamesResult = _gamesService.GetAllGames();
             foreach (Games game in gamesResult.Data)
             {
-                Console.WriteLine($"ID: {game.Id}");
+                Console.WriteLine($"ID: {game.Id} | Name: {game.Name} | Platform: {game.Platform} | Completed?: {game.Completed}");
             }
         }
         private void AddGame()
