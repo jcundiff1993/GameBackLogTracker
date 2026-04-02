@@ -12,7 +12,20 @@ namespace GameBackLogTracker.BLL
         }
         public Result<Games> AddGame(Games game)
         {
-            throw new NotImplementedException();
+            Result <Games> result = new Result<Games>();
+            try
+            {
+                result.Data = _uow.GamesRepository.Create(game);
+                _uow.Commit();
+                result.Success = true;
+                result.Message = $"{game.Name} was added successfully.";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"An error occurred while adding the game: {ex.Message}";
+            }
+            return result;
         }
 
         public Result DeleteGame(int id)
@@ -22,7 +35,19 @@ namespace GameBackLogTracker.BLL
 
         public Result<List<Games>> GetAllGames()
         {
-            throw new NotImplementedException();
+            Result<List<Games>> result = new Result<List<Games>>();
+            try
+            {
+                result.Data = _uow.GamesRepository.ReadAll().ToList();
+                result.Success = true;
+                result.Message = "Games retrieved successfully.";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"An error occurred while retrieving games: {ex.Message}";
+            }
+            return result;
         }
 
         public Result<Games> GetGameById(int id)

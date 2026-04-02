@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameBackLogTracker.CORE.Enums
 {
-    public enum PlatformChoice
+    public enum NinthGeneration
     {
+        PlayStation5 = 1,
+        XboxSeriesX = 2,
+        NintendoSwitch2 = 3,
     }
 }

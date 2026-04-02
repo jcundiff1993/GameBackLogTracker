@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Spectre.Console;
+using GameBackLogTracker.CORE.Models;
 
 namespace GameBackLogTracker.UI
 {
@@ -23,17 +24,22 @@ namespace GameBackLogTracker.UI
             bool running = true;
             while (running)
             {
+                AnsiConsole.MarkupLine("[blue][slowblink][link=https://github.com/jcundiff1993]View my other projects here.[/][/][/]");
+                _io.DisplayProgramName();
                 MenuChoice choice = _io.PromptMenuChoice();
                 switch (choice)
                 {
                     case MenuChoice.AddGame:
                         AddGame();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.ViewAllGames:
                         ViewAllGames();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.UpdateGame:
                         UpdateGame();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.DeleteGame:
                         DeleteGame();
@@ -45,6 +51,7 @@ namespace GameBackLogTracker.UI
                         running = false;
                         break;
                 }
+                _io.ReturnToMenuPrompt();
             }
         }
         private void ViewStats()
@@ -61,11 +68,18 @@ namespace GameBackLogTracker.UI
         }
         private void ViewAllGames()
         {
-            throw new NotImplementedException();
+            Result<List<Games>> gamesResult = _gamesService.GetAllGames();
+            foreach (Games game in gamesResult.Data)
+            {
+                Console.WriteLine($"ID: {game.Id}");
+            }
         }
         private void AddGame()
         {
-            throw new NotImplementedException();
+            Games newGame = _io.CreateGame();
+            Result<Games> gameResult = _gamesService.AddGame(newGame);
+            _io.Display(gameResult.Message);
+
         }
     }
 }

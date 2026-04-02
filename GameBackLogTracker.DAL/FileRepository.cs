@@ -57,7 +57,11 @@ namespace GameBackLogTracker.DAL
         }
         public T Create(T Entity)
         {
-            int maxId = _items.Max(i => i.Id);
+            int maxId = 0;
+            if (_items.Count > 0)
+            {
+                maxId = _items.Max(i => i.Id);
+            }
             Entity.Id = maxId + 1;
             _items.Add(Entity);
             return Entity;

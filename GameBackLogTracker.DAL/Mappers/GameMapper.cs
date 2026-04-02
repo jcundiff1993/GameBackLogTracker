@@ -31,8 +31,7 @@ namespace GameBackLogTracker.DAL.Mappers
 
         public string Serialize(Games games)
         {
-            return $"{games.Id},{games.Name},{games.Genre},{games.Developer},{games.Publisher},{games.Description},{games.Platform}" +
-                $"{games.ESRBRating},{games.Completed},{games.IsPlaying},{games.Playtime},{games.ReleaseDate}";
+            return $"{games.Id},{games.Name},{games.Genre},{games.Developer},{games.Publisher},{games.Description},{games.Platform},{games.ESRBRating},{games.Completed},{games.IsPlaying},{games.Playtime},{games.ReleaseDate}";
         }
     }
 }
