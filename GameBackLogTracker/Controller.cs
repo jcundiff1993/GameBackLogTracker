@@ -30,25 +30,36 @@ namespace GameBackLogTracker.UI
                 switch (choice)
                 {
                     case MenuChoice.AddGame:
+                        Console.Clear();
                         AddGame();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.ViewAllGames:
+                        Console.Clear();
                         ViewAllGames();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.UpdateGame:
+                        Console.Clear();
                         UpdateGame();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.DeleteGame:
+                        Console.Clear();
                         DeleteGame();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.ViewStats:
+                        Console.Clear();
                         ViewStats();
+                        _io.ReturnToMenuPrompt();
                         break;
                     case MenuChoice.Exit:
                         running = false;
+                        Console.Clear();
+                        AnsiConsole.MarkupLine("[green bold]Thank you for using Backlog Tracker. Goodbye![/]");
                         break;
                 }
-                _io.ReturnToMenuPrompt();
             }
         }
         private void ViewStats()
@@ -57,7 +68,57 @@ namespace GameBackLogTracker.UI
         }
         private void DeleteGame()
         {
-            throw new NotImplementedException();
+            AnsiConsole.MarkupLine("[red bold]Delete Game[/]");
+            int choice = _io.PromptInt("Search by name, or by ID? 1 = Name, 2 = Id ", 1, 2);
+            Result<List<Games>> searchResult = _gamesService.GetAllGames();
+            switch (choice)
+            {
+                case 1:
+                    string name = _io.PromptString("Enter the name of the game you want to delete: ");
+                    Games gamesToDelete = searchResult.Data.FirstOrDefault(g => g.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+                    if (gamesToDelete != null)
+                    {
+                        choice = _io.PromptInt($"Are you sure you want to delete '{gamesToDelete.Name}'? 1 = Yes, 2 = No ", 1, 2);
+                        if (choice == 1)
+                        {
+                            Result deleteResult = _gamesService.DeleteGame(gamesToDelete.Id);
+                            _io.Display(deleteResult.Message);
+                        }
+                        else
+                        {
+                            _io.Display("Deletion cancelled.");
+                        }
+                    }
+                    else
+                    {
+                        _io.Display($"No game found with the name '{name}'.");
+                    }
+                    break;
+                case 2:
+                    int id = _io.PromptInt("Enter the ID of the game you want to delete: ", 1, int.MaxValue);
+                    gamesToDelete = searchResult.Data.FirstOrDefault(i => i.Id.Equals(id));
+                    if (gamesToDelete != null)
+                    {
+                        choice = _io.PromptInt($"Are you sure you want to delete '{gamesToDelete.Name}'? 1 = Yes, 2 = No ", 1, 2);
+                        if (choice == 1)
+                        {
+                            Result deleteResult = _gamesService.DeleteGame(gamesToDelete.Id);
+                            _io.Display(deleteResult.Message);
+                        }
+                        else
+                        {
+                            _io.Display("Deletion cancelled.");
+                        }
+                    }
+                    else
+                    {
+                        _io.Display($"No game found with the id '{id}'.");
+                    }
+                    break;
+                default:
+                    _io.Display("Invalid choice. Returning to menu.");
+                    break;
+            }
         }
         private void UpdateGame()
         {
@@ -65,6 +126,8 @@ namespace GameBackLogTracker.UI
         }
         private void ViewAllGames()
         {
+            Console.Clear();
+            AnsiConsole.MarkupLine("[blue bold]All Games in Tracker:[/]");
             Result<List<Games>> gamesResult = _gamesService.GetAllGames();
             foreach (Games game in gamesResult.Data)
             {

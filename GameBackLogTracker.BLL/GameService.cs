@@ -30,7 +30,21 @@ namespace GameBackLogTracker.BLL
 
         public Result DeleteGame(int id)
         {
-            throw new NotImplementedException();
+            Result result = new Result();
+
+            try
+            {
+                _uow.GamesRepository.Delete(id);
+                _uow.Commit();
+                result.Success = true;
+                result.Message = $"Game ID: {id} was deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"An error occurred while deleting the game: {ex.Message}";
+            }
+            return result;
         }
 
         public Result<List<Games>> GetAllGames()
